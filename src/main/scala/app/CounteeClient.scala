@@ -23,10 +23,8 @@ object CounteeClient {
     private implicit val recordDecoder: Decoder[CounteeRecord] = (c: HCursor) =>
       for {
         name                <- c.get[String]("name")
-        data                = c.downField("counteritems").downArray
-        firstCounterItemVal <- data.get[Int]("val")
-        timestamp           <- data.get[Long]("ts_created")
-      } yield (CounteeRecord(name, firstCounterItemVal, timestamp))
+        firstCounterItemVal <- c.downField("counteritems").downArray.get[Int]("val")
+      } yield (CounteeRecord(name, firstCounterItemVal))
 
     private implicit val counteeResponseDecoder: Decoder[NonEmptyList[CounteeRecord]] = (c: HCursor) => {
       c.downField("response")
@@ -37,4 +35,4 @@ object CounteeClient {
   }
 }
 
-case class CounteeRecord(name: String, firstCounterItemVal: Int, tsSeconds: Long)
+case class CounteeRecord(name: String, firstCounterItemVal: Int)

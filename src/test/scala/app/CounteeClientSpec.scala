@@ -14,7 +14,7 @@ class CounteeClientSpec extends CatsEffectSuite {
 
   test("Decoding of a valid API response should yield a list of records") {
     val mockResponse = Ok(excerptOfManuallyRecordedResponse)
-    val expected     = NonEmptyList.of(CounteeRecord("Annaberg IZ", 0, 1620836932), CounteeRecord("Belgern IZ", 0, 1620804532))
+    val expected     = NonEmptyList.of(CounteeRecord("Annaberg IZ", 0), CounteeRecord("Belgern IZ", 0))
     client(mockResponse).fetch.map(obtained => assertEquals(obtained, expected))
   }
 
