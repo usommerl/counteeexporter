@@ -10,6 +10,7 @@ You don't need to set up a Prometheus instance yourself to use _counteeexporter_
 
 **Disclaimer:** I did not find official documentation for the Countee API so this probably only works with the endpoint I was interested in.
 
+![Grafana dashboard with countee data](screenshot_grafana_dashboard.png)
 
 [countee_dashboard]: https://www.countee.ch/app/de/counter/impfee/_iz_sachsen
 [expostion_format]: https://github.com/prometheus/docs/blob/master/content/docs/instrumenting/exposition_formats.md
