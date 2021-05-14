@@ -1,0 +1,14 @@
+prometheus:
+  configs:
+    - name: integrations
+      host_filter: false
+      scrape_configs:
+        - job_name: 'counteeexporter'
+          scrape_interval: 15s
+          static_configs:
+            - targets: ['counteeexporter:8080']
+      remote_write:
+        - basic_auth:
+            password: ${GRAFANA_CLOUD_PASSWORD}
+            username: ${GRAFANA_CLOUD_USERNAME}
+          url: ${PROMETHEUS_REMOTE_URL}

@@ -1,0 +1,31 @@
+version: '3.5'
+
+services:
+  grafana-agent:
+    image: grafana/agent:v0.13.1
+    container_name: grafana-agent
+    volumes:
+      - agent_data:/etc/agent
+      - ./agent.yml:/etc/agent.yml
+    entrypoint:
+      - /bin/agent
+      - -config.expand-env
+      - -config.file=/etc/agent.yml
+      - -prometheus.wal-directory=/tmp/agent/wal
+    environment:
+      - GRAFANA_CLOUD_USERNAME
+      - GRAFANA_CLOUD_PASSWORD
+      - PROMETHEUS_REMOTE_URL
+    restart: unless-stopped
+
+  counteeexporter:
+    image: ghcr.io/usommerl/counteeexporter:0.1.0
+    container_name: counteeexporter
+    environment:
+      - APIDOCS_DESCRIPTION=Export vacant vaccination slots in Saxony as Prometheus metrics
+      - COUNTEE_URI=https://countee-impfee.b-cdn.net/api/1.1/de/counters/getAll/_iz_sachsen
+    restart: unless-stopped
+
+volumes:
+  agent_data:
+    name: counteeexporter_agent_data

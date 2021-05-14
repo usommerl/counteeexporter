@@ -1,0 +1,35 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - deploy
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set environment variables for deployment
+      run: |-
+       echo "DEPLOY_PATH=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+
+    - name: Deploy
+      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        port: ${{ secrets.SSH_PORT }}
+        user: ${{ secrets.SSH_USER }}
+        pass: ${{ secrets.SSH_PASS }}
+        first_ssh: |-
+          mkdir -p $DEPLOY_PATH
+        scp: |-
+          'docker-compose.yml' => $DEPLOY_PATH/
+          'agent.yml' => $DEPLOY_PATH/
+        last_ssh: |-
+          cd $DEPLOY_PATH;
+          export GRAFANA_CLOUD_USERNAME='${{ secrets.GRAFANA_CLOUD_USERNAME }}';
+          export GRAFANA_CLOUD_PASSWORD='${{ secrets.GRAFANA_CLOUD_PASSWORD }}';
+          export PROMETHEUS_REMOTE_URL='https://prometheus-us-central1.grafana.net/api/prom/push';
+          docker-compose up -d
