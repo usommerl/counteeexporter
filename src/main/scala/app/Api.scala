@@ -60,20 +60,11 @@ object MetricsApi {
       * See: https://github.com/prometheus/docs/blob/master/content/docs/instrumenting/exposition_formats.md
       */
     private def toExpositionFormat(l: NonEmptyList[CounteeRecord]): String = {
-      val metricName1 = "countee_first_counter_item_value"
-      val metricName2 = s"${metricName1}_ts_provided"
-      val docMetric1 =
-        s"# HELP $metricName1 Value of the first counter item.\n# TYPE $metricName1 gauge\n"
-      val docMetric2 =
-        s"# HELP $metricName2 Value of the first counter item (Uses the provided timestamp from Countee)\n# TYPE $metricName2 gauge\n"
-
-      val metrics1 = l.foldLeft(docMetric1) {
-        case (acc, r) => s"""${acc}${metricName1}{name="${r.name}"}\t${r.firstCounterItemVal}\n"""
+      val metricName = "countee_first_counter_item_value"
+      val doc        = s"# HELP $metricName Value of the first counter item.\n# TYPE $metricName gauge\n"
+      l.foldLeft(doc) {
+        case (acc, r) => s"""${acc}${metricName}{name="${r.name}"}\t${r.firstCounterItemVal}\n"""
       }
-      val metrics2 = l.foldLeft(docMetric2) {
-        case (acc, r) => s"""${acc}${metricName2}{name="${r.name}"}\t${r.firstCounterItemVal}\t${r.tsSeconds * 1000}\n"""
-      }
-      (metrics1 + metrics2)
     }
   }
 }
