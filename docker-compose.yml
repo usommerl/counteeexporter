@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
 
   counteeexporter:
-    image: ghcr.io/usommerl/counteeexporter:0.1.0
+    image: ghcr.io/usommerl/counteeexporter:0.1.1
     container_name: counteeexporter
     environment:
       - APIDOCS_DESCRIPTION=Export vacant vaccination slots in Saxony as Prometheus metrics
