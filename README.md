@@ -2,7 +2,7 @@
 
 ![build](https://img.shields.io/github/workflow/status/usommerl/counteeexporter/ci?style=for-the-badge)
 [![codecov](https://img.shields.io/codecov/c/github/usommerl/counteeexporter?style=for-the-badge)](https://codecov.io/gh/usommerl/graalnative4s)
-<!--[![Scala Steward badge](https://img.shields.io/badge/Scala_Steward-helping-blue.svg?style=for-the-badge)](https://scala-steward.org)-->
+[![Scala Steward badge](https://img.shields.io/badge/Scala_Steward-helping-blue.svg?style=for-the-badge)](https://scala-steward.org)
 
 In my region, you need to use a [dashboard by Countee][countee_dashboard] to get informed about vacant vaccination slots. I have built _counteeexporter_ on a whim because it is a waste of time to check the official dashboard several times a day only to find out that there are no free slots. It leverages the Countee API to fetch the information and exposes the results in the Prometheus [exposition format][expostion_format]. That means you can use _counteexporter_ as a scrape target for [Prometheus][prometheus] and create automated alerts for vacant slots in a vaccination centre of your choice.
 
