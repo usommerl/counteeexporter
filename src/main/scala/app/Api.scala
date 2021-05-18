@@ -56,14 +56,13 @@ object MetricsApi {
         .errorOut(statusCode)
         .serverLogic(_ => client.fetch.map(toExpositionFormat(_).asRight))
 
-    /**
-      * See: https://github.com/prometheus/docs/blob/master/content/docs/instrumenting/exposition_formats.md
+    /** See: https://github.com/prometheus/docs/blob/master/content/docs/instrumenting/exposition_formats.md
       */
     private def toExpositionFormat(l: NonEmptyList[CounteeRecord]): String = {
       val metricName = "countee_first_counter_item_value"
       val doc        = s"# HELP $metricName Value of the first counter item.\n# TYPE $metricName gauge\n"
-      l.foldLeft(doc) {
-        case (acc, r) => s"""${acc}${metricName}{name="${r.name}"}\t${r.firstCounterItemVal}\n"""
+      l.foldLeft(doc) { case (acc, r) =>
+        s"""${acc}${metricName}{name="${r.name}"}\t${r.firstCounterItemVal}\n"""
       }
     }
   }

@@ -39,7 +39,7 @@ lazy val counteeexporter = project
       "org.http4s"                  %% "http4s-ember-server"      % v.http4s,
       "org.http4s"                  %% "http4s-circe"             % v.http4s,
       "org.http4s"                  %% "http4s-dsl"               % v.http4s,
-      "org.scalameta"               %% "munit"                    % v.munit % Test,
+      "org.scalameta"               %% "munit"                    % v.munit   % Test,
       "org.typelevel"               %% "munit-cats-effect-2"      % v.munitCE % Test
     ),
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
