@@ -13,9 +13,9 @@ import org.http4s.implicits._
 
 class ApiSpec extends ApiSuite {
   test("GET /metrics should return obtained records in prometheus exposition format") {
-    val client =
+    val client       =
       counteeClient(IO.pure(NonEmptyList.of(CounteeRecord("Annaberg IZ", 0), CounteeRecord("Belgern IZ", 0))))
-    val response = api(client).run(Request[IO](method = GET, uri = uri"/metrics"))
+    val response     = api(client).run(Request[IO](method = GET, uri = uri"/metrics"))
     val expectedBody =
       s"""# HELP countee_first_counter_item_value Value of the first counter item.
          |# TYPE countee_first_counter_item_value gauge
