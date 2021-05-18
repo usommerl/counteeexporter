@@ -26,7 +26,7 @@ class CounteeClientSpec extends CatsEffectSuite {
   }
 
   private def client(response: IO[Response[IO]]): CounteeClient[IO] = {
-    val uri = Uri.unsafeFromString("https://countee-impfee.b-cdn.net/api/1.1/de/counters/getAll/_iz_sachsen")
+    val uri        = Uri.unsafeFromString("https://countee-impfee.b-cdn.net/api/1.1/de/counters/getAll/_iz_sachsen")
     val mockServer = HttpApp[IO] {
       case GET -> Root / "api" / "1.1" / "de" / "counters" / "getAll" / "_iz_sachsen" => response
       case _                                                                          => ???

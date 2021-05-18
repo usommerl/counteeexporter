@@ -5,10 +5,10 @@ ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports"
 val v = new {
   val circe   = "0.13.0"
   val ciris   = "1.2.1"
-  val http4s  = "0.21.22"
+  val http4s  = "0.21.23"
   val odin    = "0.11.0"
   val tapir   = "0.17.19"
-  val munit   = "0.7.25"
+  val munit   = "0.7.26"
   val munitCE = "1.0.3"
 }
 
@@ -39,7 +39,7 @@ lazy val counteeexporter = project
       "org.http4s"                  %% "http4s-ember-server"      % v.http4s,
       "org.http4s"                  %% "http4s-circe"             % v.http4s,
       "org.http4s"                  %% "http4s-dsl"               % v.http4s,
-      "org.scalameta"               %% "munit"                    % v.munit % Test,
+      "org.scalameta"               %% "munit"                    % v.munit   % Test,
       "org.typelevel"               %% "munit-cats-effect-2"      % v.munitCE % Test
     ),
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
