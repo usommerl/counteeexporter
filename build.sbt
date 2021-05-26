@@ -3,7 +3,7 @@ ThisBuild / organization := "dev.usommerl"
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.5.0"
 
 val v = new {
-  val circe   = "0.13.0"
+  val circe   = "0.14.0"
   val ciris   = "1.2.1"
   val http4s  = "0.21.23"
   val odin    = "0.11.0"
@@ -34,7 +34,6 @@ lazy val counteeexporter = project
       "io.circe"                    %% "circe-generic"            % v.circe,
       "io.circe"                    %% "circe-parser"             % v.circe,
       "io.circe"                    %% "circe-literal"            % v.circe,
-      "io.circe"                    %% "circe-generic-extras"     % v.circe,
       "org.http4s"                  %% "http4s-ember-client"      % v.http4s,
       "org.http4s"                  %% "http4s-ember-server"      % v.http4s,
       "org.http4s"                  %% "http4s-circe"             % v.http4s,
