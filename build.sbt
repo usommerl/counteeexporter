@@ -34,7 +34,6 @@ lazy val counteeexporter = project
       "io.circe"                    %% "circe-generic"            % v.circe,
       "io.circe"                    %% "circe-parser"             % v.circe,
       "io.circe"                    %% "circe-literal"            % v.circe,
-      "io.circe"                    %% "circe-generic-extras"     % v.circe,
       "org.http4s"                  %% "http4s-ember-client"      % v.http4s,
       "org.http4s"                  %% "http4s-ember-server"      % v.http4s,
       "org.http4s"                  %% "http4s-circe"             % v.http4s,
