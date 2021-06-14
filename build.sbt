@@ -9,7 +9,7 @@ val v = new {
   val odin    = "0.11.0"
   val tapir   = "0.17.19"
   val munit   = "0.7.26"
-  val munitCE = "1.0.3"
+  val munitCE = "1.0.5"
 }
 
 lazy val counteeexporter = project
