@@ -1,36 +1,36 @@
 package app
 
+import cats.arrow.FunctionK
 import cats.effect._
 import cats.implicits._
+import cats.~>
 import dev.usommerl.BuildInfo
 import io.odin._
-import eu.timepit.refined.auto._
+import org.http4s.Uri
 import org.http4s.client.middleware.{RequestLogger, ResponseLogger}
-import org.http4s.server.middleware
 import org.http4s.ember.client.EmberClientBuilder
 import org.http4s.ember.server.EmberServerBuilder
-import org.http4s.server.Server
-import org.http4s.Uri
+import org.http4s.server.{middleware, Server}
 
 object Main extends IOApp.Simple {
 
-  def run: IO[Unit] = resources[IO].use(_ => IO.never)
+  def run: IO[Unit] =
+    app.config.resource[IO].flatMap(runF[IO](_, FunctionK.id)).useForever
 
-  def resources[F[_]: ConcurrentEffect: ContextShift: Timer]: Resource[F, Unit] =
+  def runF[F[_]: Async](config: Config, functionK: F ~> IO): Resource[F, Unit] =
     for {
-      config <- app.config.resource
-      logger <- loggerResource[F](config.logger)
-      _      <- Resource.eval(logger.info(startMessage(BuildInfo)))
-      client <- counteeClientResource[F](config.counteeUri)
-      _      <- serverResource[F](config.server, client)
+      loogger <- makeLogger[F](config.logger, functionK)
+      _       <- Resource.eval(loogger.info(startMessage(BuildInfo)))
+      client  <- makeClient[F](config.counteeUri)
+      _       <- makeServer[F](config.server, client)
     } yield ()
 
-  def loggerResource[F[_]: ConcurrentEffect: Timer](config: LoggerConfig): Resource[F, Logger[F]] =
+  def makeLogger[F[_]: Async](config: LoggerConfig, functionK: F ~> IO): Resource[F, Logger[F]] =
     Resource
       .pure[F, Logger[F]](consoleLogger[F](config.formatter, config.level))
-      .evalTap(logger => Sync[F].delay(OdinInterop.globalLogger.set(logger.mapK(Effect.toIOK).some)))
+      .evalTap(logger => Sync[F].delay(OdinInterop.globalLogger.set(logger.mapK(functionK).some)))
 
-  def counteeClientResource[F[_]: Concurrent: Timer: ContextShift](uri: Uri): Resource[F, CounteeClient[F]] =
+  def makeClient[F[_]: Async](uri: Uri): Resource[F, CounteeClient[F]] =
     EmberClientBuilder
       .default[F]
       .withoutUserAgent
@@ -39,10 +39,10 @@ object Main extends IOApp.Simple {
       .map(ResponseLogger(logHeaders = false, logBody = false))
       .map(CounteeClient(_, uri))
 
-  def serverResource[F[_]: Concurrent: Timer: ContextShift](config: ServerConfig, client: CounteeClient[F]): Resource[F, Server[F]] =
+  def makeServer[F[_]: Async](config: ServerConfig, client: CounteeClient[F]): Resource[F, Server] =
     EmberServerBuilder
       .default[F]
-      .withHost("0.0.0.0")
+      .withHost(config.host)
       .withPort(config.port)
       .withHttpApp(middleware.Logger.httpApp(logHeaders = false, logBody = false)(Api[F](config.apiDocs, client)))
       .build

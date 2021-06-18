@@ -10,6 +10,7 @@ import org.http4s.MediaType._
 import org.http4s.dsl.io._
 import org.http4s.headers.`Content-Type`
 import org.http4s.implicits._
+import org.typelevel.ci.CIStringSyntax
 
 class ApiSpec extends ApiSuite {
   test("GET /metrics should return obtained records in prometheus exposition format") {
@@ -50,7 +51,7 @@ trait ApiSuite extends CatsEffectSuite {
   ): IO[Unit] = io.flatMap { response =>
     assertEquals(response.status, expectedStatus)
     if (evaluateBody) {
-      assertEquals(response.headers.get(`Content-Type`), expectedContentType)
+      assertEquals(response.headers.get(ci"Content-Type").map(_.head), expectedContentType.map(_.toRaw1))
       response.as[String].assertEquals(expectedBody.getOrElse(""))
     } else {
       IO.unit
