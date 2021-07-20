@@ -1,7 +1,7 @@
 package app
 
 import cats.data.NonEmptyList
-import cats.effect.Sync
+import cats.effect.Concurrent
 import cats.implicits._
 import io.circe._
 import io.circe.CursorOp.DownField
@@ -15,7 +15,7 @@ trait CounteeClient[F[_]] {
 
 object CounteeClient {
 
-  def apply[F[_]: Sync](http: Client[F], counteeUri: Uri) = new CounteeClient[F] {
+  def apply[F[_]: Concurrent](http: Client[F], counteeUri: Uri) = new CounteeClient[F] {
 
     override def fetch: F[NonEmptyList[CounteeRecord]] =
       http.expect[NonEmptyList[CounteeRecord]](counteeUri)

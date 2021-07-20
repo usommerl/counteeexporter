@@ -1,14 +1,12 @@
 package app
 
-import cats.implicits._
-import cats.effect.IO
-import munit.CatsEffectSuite
-import org.http4s.dsl.io._
-import org.http4s.Uri
-import org.http4s.HttpApp
-import org.http4s.client.Client
-import org.http4s.Response
 import cats.data.NonEmptyList
+import cats.effect.IO
+import cats.implicits._
+import munit.CatsEffectSuite
+import org.http4s.{HttpApp, Response, Uri}
+import org.http4s.client.Client
+import org.http4s.dsl.io._
 
 class CounteeClientSpec extends CatsEffectSuite {
 
