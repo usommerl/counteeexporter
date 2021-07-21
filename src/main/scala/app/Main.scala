@@ -19,10 +19,10 @@ object Main extends IOApp.Simple {
 
   def runF[F[_]: Async](config: Config, functionK: F ~> IO): Resource[F, Unit] =
     for {
-      loogger <- makeLogger[F](config.logger, functionK)
-      _       <- Resource.eval(loogger.info(startMessage(BuildInfo)))
-      client  <- makeClient[F](config.counteeUri)
-      _       <- makeServer[F](config.server, client)
+      logger <- makeLogger[F](config.logger, functionK)
+      _      <- Resource.eval(logger.info(startMessage(BuildInfo)))
+      client <- makeClient[F](config.counteeUri)
+      _      <- makeServer[F](config.server, client)
     } yield ()
 
   def makeLogger[F[_]: Async](config: LoggerConfig, functionK: F ~> IO): Resource[F, Logger[F]] =
