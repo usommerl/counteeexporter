@@ -56,6 +56,7 @@ lazy val counteeexporter = project
         entryPoint("java", "-jar", artifactTargetPath)
       }
     },
+    assembly / test := (Test / test).value,
     assembly / assemblyMergeStrategy := {
       case "META-INF/maven/org.webjars/swagger-ui/pom.properties" => MergeStrategy.singleOrError
       case x                                                      => (assembly / assemblyMergeStrategy).value(x)
