@@ -27,7 +27,7 @@ lazy val counteeexporter = project
       "com.softwaremill.sttp.tapir" %% "tapir-openapi-docs"       % v.tapir,
       "com.softwaremill.sttp.tapir" %% "tapir-openapi-circe-yaml" % v.tapir,
       "com.softwaremill.sttp.tapir" %% "tapir-refined"            % v.tapir,
-      "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-http4s"  % v.tapir,
+      "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui"         % v.tapir,
       "is.cir"                      %% "ciris"                    % v.ciris,
       "is.cir"                      %% "ciris-refined"            % v.ciris,
       "io.circe"                    %% "circe-core"               % v.circe,
