@@ -7,7 +7,7 @@ val v = new {
   val ciris   = "2.0.0"
   val http4s  = "0.23.1"
   val odin    = "0.12.0"
-  val tapir   = "0.19.0-M4"
+  val tapir   = "0.19.0-M5"
   val munit   = "0.7.28"
   val munitCE = "1.0.5"
 }
@@ -27,7 +27,7 @@ lazy val counteeexporter = project
       "com.softwaremill.sttp.tapir" %% "tapir-openapi-docs"       % v.tapir,
       "com.softwaremill.sttp.tapir" %% "tapir-openapi-circe-yaml" % v.tapir,
       "com.softwaremill.sttp.tapir" %% "tapir-refined"            % v.tapir,
-      "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui-http4s"  % v.tapir,
+      "com.softwaremill.sttp.tapir" %% "tapir-swagger-ui"         % v.tapir,
       "is.cir"                      %% "ciris"                    % v.ciris,
       "is.cir"                      %% "ciris-refined"            % v.ciris,
       "io.circe"                    %% "circe-core"               % v.circe,
