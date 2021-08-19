@@ -62,7 +62,7 @@ object MetricsApi {
       val metricName = "countee_first_counter_item_value"
       val doc        = s"# HELP $metricName Value of the first counter item.\n# TYPE $metricName gauge\n"
       l.foldLeft(doc) { case (acc, r) =>
-        s"""${acc}${metricName}{name="${r.name}"}\t${r.firstCounterItemVal}\n"""
+        s"""$acc$metricName{name="${r.name}"}\t${r.firstCounterItemVal}\n"""
       }
     }
   }
