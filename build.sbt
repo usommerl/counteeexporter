@@ -1,5 +1,5 @@
-ThisBuild / scalaVersion := "2.13.6"
-ThisBuild / organization := "dev.usommerl"
+ThisBuild / scalaVersion                                   := "2.13.6"
+ThisBuild / organization                                   := "dev.usommerl"
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.5.0"
 
 val v = new {
@@ -41,13 +41,13 @@ lazy val counteeexporter = project
       "org.scalameta"               %% "munit"                    % v.munit   % Test,
       "org.typelevel"               %% "munit-cats-effect-3"      % v.munitCE % Test
     ),
-    buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
-    buildInfoPackage := organization.value,
+    buildInfoKeys                    := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
+    buildInfoPackage                 := organization.value,
     buildInfoOptions ++= Seq[BuildInfoOption](BuildInfoOption.ToMap, BuildInfoOption.BuildTime),
-    semanticdbEnabled := true,
-    semanticdbVersion := scalafixSemanticdb.revision,
-    docker / imageNames := Seq(ImageName(s"ghcr.io/usommerl/${name.value}:$dockerImageTag")),
-    docker / dockerfile := {
+    semanticdbEnabled                := true,
+    semanticdbVersion                := scalafixSemanticdb.revision,
+    docker / imageNames              := Seq(ImageName(s"ghcr.io/usommerl/${name.value}:$dockerImageTag")),
+    docker / dockerfile              := {
       val artifact: File     = assembly.value
       val artifactTargetPath = s"/app/${artifact.name}"
       new Dockerfile {
@@ -56,7 +56,7 @@ lazy val counteeexporter = project
         entryPoint("java", "-jar", artifactTargetPath)
       }
     },
-    assembly / test := (Test / test).value,
+    assembly / test                  := (Test / test).value,
     assembly / assemblyMergeStrategy := {
       case "META-INF/maven/org.webjars/swagger-ui/pom.properties" => MergeStrategy.singleOrError
       case x                                                      => (assembly / assemblyMergeStrategy).value(x)

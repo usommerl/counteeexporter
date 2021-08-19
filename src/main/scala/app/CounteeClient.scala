@@ -26,12 +26,11 @@ object CounteeClient {
         firstCounterItemVal <- c.downField("counteritems").downArray.get[Int]("val")
       } yield (CounteeRecord(name, firstCounterItemVal))
 
-    private implicit val counteeResponseDecoder: Decoder[NonEmptyList[CounteeRecord]] = (c: HCursor) => {
+    private implicit val counteeResponseDecoder: Decoder[NonEmptyList[CounteeRecord]] = (c: HCursor) =>
       c.downField("response")
         .downField("data")
         .as[Map[String, CounteeRecord]]
         .flatMap(_.values.toList.toNel.toRight(DecodingFailure("No data records", List(DownField("response"), DownField("data")))))
-    }
   }
 }
 
