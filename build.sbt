@@ -2,7 +2,7 @@ ThisBuild / scalaVersion                                   := "2.13.6"
 ThisBuild / organization                                   := "dev.usommerl"
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.5.0"
 
-val v = new {
+val v                    = new {
   val circe   = "0.14.1"
   val ciris   = "2.0.0"
   val http4s  = "0.23.4"

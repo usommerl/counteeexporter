@@ -42,7 +42,7 @@ object Api {
   }
 }
 
-object MetricsApi {
+object MetricsApi                    {
   def apply[F[_]: Async](client: CounteeClient[F]) = new TapirApi[F] {
     override val tag                  = Tag("Metrics", None)
     override lazy val serverEndpoints = List(metrics)
