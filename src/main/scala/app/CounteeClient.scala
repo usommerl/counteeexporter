@@ -17,10 +17,10 @@ object CounteeClient {
 
   def apply[F[_]: Concurrent](http: Client[F], counteeUri: Uri) = new CounteeClient[F] {
 
-    override def fetch: F[NonEmptyList[CounteeRecord]] =
+    override def fetch: F[NonEmptyList[CounteeRecord]]                                =
       http.expect[NonEmptyList[CounteeRecord]](counteeUri)
 
-    private implicit val recordDecoder: Decoder[CounteeRecord] = (c: HCursor) =>
+    private implicit val recordDecoder: Decoder[CounteeRecord]                        = (c: HCursor) =>
       for {
         name                <- c.get[String]("name")
         firstCounterItemVal <- c.downField("counteritems").downArray.get[Int]("val")
