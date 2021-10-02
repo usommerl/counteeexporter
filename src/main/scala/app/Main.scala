@@ -47,7 +47,7 @@ object Main extends IOApp.Simple {
       .withHttpApp(middleware.Logger.httpApp(logHeaders = false, logBody = false)(Api[F](config.apiDocs, client)))
       .build
 
-  private def startMessage(b: BuildInfo.type): String                                              =
+  private def startMessage(b: BuildInfo.type): String =
     "BUILD [name: %s, version: %s, vmVersion: %s, scalaVersion: %s, sbtVersion: %s, builtAt: %s]"
       .format(b.name, b.version, System.getProperty("java.vm.version"), b.scalaVersion, b.sbtVersion, b.builtAtString)
 }
