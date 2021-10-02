@@ -32,7 +32,7 @@ class CounteeClientSpec extends CatsEffectSuite {
     CounteeClient(Client.fromHttpApp(mockServer), uri)
   }
 
-  private val excerptOfManuallyRecordedResponse                     =
+  private val excerptOfManuallyRecordedResponse =
     raw"""
 {
   "response": {
